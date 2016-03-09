@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Piano</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="gcm_senderId" >454531476781</string>
+</resources>

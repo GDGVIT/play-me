@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <array name="sound_tones_basic">
+
+
+        <item>@raw/aedit</item>>
+        <item>@raw/bedit</item>
+        <item>@raw/cedit</item>
+        <item>@raw/dedit</item>
+        <item>@raw/eedit</item>
+        <item>@raw/fedit</item>
+        <item>@raw/gedit</item>
+    </array>
+
+    <array name="sound_tones_sharp">
+
+
+        <item>@raw/asedit</item>
+        <item>@raw/bhighedit</item>
+        <item>@raw/csedit</item>
+        <item>@raw/dsedit</item>
+        <item>@raw/eedit</item>
+        <item>@raw/fsedit</item>
+        <item>@raw/gsedit</item>
+    </array>
+
+    <array name="sound_tones_basic_sad">
+
+
+        <item>@raw/a_sad</item>>
+        <item>@raw/b_sad</item>
+        <item>@raw/c</item>
+        <item>@raw/dedit</item>
+        <item>@raw/e_sad</item>
+        <item>@raw/fs</item>
+        <item>@raw/gs</item>
+    </array>
+
+    <array name="sound_tones_sharp_sad">
+
+
+        <item>@raw/as</item>
+        <item>@raw/bhigh_sad</item>
+        <item>@raw/cs_sad</item>
+        <item>@raw/ds_sad</item>
+        <item>@raw/e_sad</item>
+        <item>@raw/fs_sad</item>
+        <item>@raw/gs_sad</item>
+    </array>
+</resources>
