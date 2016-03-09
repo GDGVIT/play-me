@@ -1,37 +1,24 @@
 package com.example.shuvamghosh.piano;
 
-import android.app.IntentService;
 import android.content.Intent;
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.iid.InstanceID;
+import com.google.android.gms.iid.InstanceIDListenerService;
 
-import java.io.IOException;
+public class MyInstanceIDListenerService extends InstanceIDListenerService {
 
-public class MyInstanceIDListenerService extends IntentService {
+    private static final String TAG = "MyInstanceIDLS";
+
     /**
-     * Creates an IntentService.  Invoked by your subclass's constructor.
-     *
-     * @param name Used to name the worker thread, important only for debugging.
+     * Called if InstanceID token is updated. This may occur if the security of
+     * the previous token had been compromised. This call is initiated by the
+     * InstanceID provider.
      */
-    public MyInstanceIDListenerService(String name) {
-        super(name);
-    }
-    // ...
-
+    // [START refresh_token]
     @Override
-    public void onHandleIntent(Intent intent) {
-        // ...
-        InstanceID instanceID = InstanceID.getInstance(this);
-        try {
-            String token = instanceID.getToken(getString(R.string.gcm_senderId),
-                    GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // ...
+    public void onTokenRefresh() {
+        // Fetch updated Instance ID token and notify our app's server of any changes (if applicable).
+        Intent intent = new Intent(this, RegistrationIntentService.class);
+        startService(intent);
     }
-
-    // ...
+    // [END refresh_token]
 }
