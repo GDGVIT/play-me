@@ -425,7 +425,7 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
     public void play() {
 
 
-        if(mood.equals("sad"))
+        if(mood.equals("sadness"))
         {
             int[] SOUND_TONES_BASIC_T = new int[7];
             int[] SOUND_TONES_SHARP_T = new int[7];
