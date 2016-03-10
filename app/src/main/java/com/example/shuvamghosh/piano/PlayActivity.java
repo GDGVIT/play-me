@@ -469,7 +469,7 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
         }
 
         Calendar c=Calendar.getInstance();
-        CountDownTimer startDelay=new CountDownTimer((Integer.parseInt(time)-c.get(Calendar.SECOND))*1000,1000) {
+        CountDownTimer startDelay=new CountDownTimer((Integer.parseInt(time))*1000,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 tv.setText(String.valueOf(millisUntilFinished/1000));
@@ -497,25 +497,25 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
                 if (start[0] < arrBasic.length) {
                     //ImageView iv=(ImageView)findViewById(R.id.imageView);
                     Log.d(String.valueOf(start[0]), String.valueOf(arrBasic.length));
-                    if (Arrays.binarySearch(myTone.split(","),String.valueOf(myToneArrayBasic[start[0]]))!=-1) {
-                        // if (myTone.equals(String.valueOf(myToneArrayBasic[start[0]]))) {
-                        toneInt = start[0];
-                        toneMode = PlayActivity.BASIC;
-                        Log.d("flashImage", String.valueOf(myToneArrayBasic[start[0]]));
+                    //if (Arrays.binarySearch(myTone.split(","),String.valueOf(myToneArrayBasic[start[0]]))!=-1) {
+                         if (myTone.equals(String.valueOf(myToneArrayBasic[start[0]]))) {
+                             toneInt = start[0];
+                             toneMode = PlayActivity.BASIC;
+                             Log.d("flashImage", String.valueOf(myToneArrayBasic[start[0]]));
 
-                        imageView.setActivated(true);
+                             imageView.setActivated(true);
 
-                        flashImage.setText("Press");
+                             flashImage.setText("Press");
 
 
 
                        /* Toast.makeText(PlayActivity.this, "Press", Toast.LENGTH_SHORT).show();*/
 
-                        Log.d("flashImageV", String.valueOf(flashImage.getVisibility()));
+                             Log.d("flashImageV", String.valueOf(flashImage.getVisibility()));
 
 
-                    } else if (Arrays.binarySearch(myTone.split(","),String.valueOf(myToneArraySharp[start[0]]))!=-1) {
-                        // else if (myTone.equals(String.valueOf(myToneArraySharp[start[0]]))) {
+                             //} else if (Arrays.binarySearch(myTone.split(","),String.valueOf(myToneArraySharp[start[0]]))!=-1) {
+                         } else if (myTone.equals(String.valueOf(myToneArraySharp[start[0]]))) {
                         toneInt = start[0];
                         toneMode = PlayActivity.SHARP;
                         Log.d("flashImage", String.valueOf(myToneArrayBasic[start[0]]));
