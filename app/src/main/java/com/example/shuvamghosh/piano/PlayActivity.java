@@ -1,6 +1,10 @@
 package com.example.shuvamghosh.piano;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.hardware.Sensor;
@@ -13,16 +17,22 @@ import android.media.SoundPool.OnLoadCompleteListener;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Arrays;
+import java.util.Calendar;
 
 public class PlayActivity extends AppCompatActivity implements SensorEventListener, View.OnClickListener {
 
@@ -58,6 +68,9 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
     private TextView tv;
     private RadioButton radioButton;
     private int toneMode = BASIC;
+    private String mood,time;
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+    private boolean isReceiverRegistered;
 
     /**
      * Called when the activity is first created.
@@ -68,6 +81,27 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
         setContentView(R.layout.activity_play);
 
         AppController.getInstance().setTones();
+
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                tv.setText("Started Playing");
+                try {
+                    JSONObject object=new JSONObject(intent.getStringExtra("message"));
+                    mood=object.getString("mood");
+                    time=object.getString("time");
+                    play();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+
+        // Registering BroadcastReceiver
+        registerReceiver();
+
         toneEditText = (EditText) findViewById(R.id.tone_set);
         button = (Button) findViewById(R.id.set_button);
         button.setOnClickListener(this);
@@ -195,6 +229,15 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
         soundID13 = soundPool.load(this, R.raw.chord10edit, 1);*/
 
 
+    }
+
+
+    private void registerReceiver(){
+        if(!isReceiverRegistered) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                    new IntentFilter(QuickstartPreferences.PLAY_NOTIFICATION));
+            isReceiverRegistered = true;
+        }
     }
 
     private void checkDeviceTone() {
@@ -382,7 +425,7 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
     public void play() {
 
 
-        if(radioButton.isChecked()==true)
+        if(mood.equals("sad"))
         {
             int[] SOUND_TONES_BASIC_T = new int[7];
             int[] SOUND_TONES_SHARP_T = new int[7];
@@ -425,18 +468,37 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
 
         }
 
+        Calendar c=Calendar.getInstance();
+        CountDownTimer startDelay=new CountDownTimer((Integer.parseInt(time)-c.get(Calendar.SECOND))*1000,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                tv.setText(String.valueOf(millisUntilFinished/1000));
+            }
 
+            @Override
+            public void onFinish() {
+                finallyPlay();
+            }
+        };
+        startDelay.start();
+
+
+
+
+    }
+
+    private void finallyPlay() {
         final int[] start = {0};
         CountDownTimer countDownTimer = new CountDownTimer(21600, 800) {
             @Override
             public void onTick(long millisUntilFinished) {
                 count++;
-            tv.setText("Count: "+count);
+                tv.setText("Count: "+count);
                 if (start[0] < arrBasic.length) {
                     //ImageView iv=(ImageView)findViewById(R.id.imageView);
                     Log.d(String.valueOf(start[0]), String.valueOf(arrBasic.length));
                     if (Arrays.binarySearch(myTone.split(","),String.valueOf(myToneArrayBasic[start[0]]))!=-1) {
-                   // if (myTone.equals(String.valueOf(myToneArrayBasic[start[0]]))) {
+                        // if (myTone.equals(String.valueOf(myToneArrayBasic[start[0]]))) {
                         toneInt = start[0];
                         toneMode = PlayActivity.BASIC;
                         Log.d("flashImage", String.valueOf(myToneArrayBasic[start[0]]));
@@ -453,7 +515,7 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
 
 
                     } else if (Arrays.binarySearch(myTone.split(","),String.valueOf(myToneArraySharp[start[0]]))!=-1) {
-                    // else if (myTone.equals(String.valueOf(myToneArraySharp[start[0]]))) {
+                        // else if (myTone.equals(String.valueOf(myToneArraySharp[start[0]]))) {
                         toneInt = start[0];
                         toneMode = PlayActivity.SHARP;
                         Log.d("flashImage", String.valueOf(myToneArrayBasic[start[0]]));
@@ -487,8 +549,6 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
             }
         };
         countDownTimer.start();
-
-
     }
 
 

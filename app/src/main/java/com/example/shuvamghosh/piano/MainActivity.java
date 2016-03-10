@@ -58,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
                         .getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
                 if (sentToken) {
                     mInformationTextView.setText("Sent Token");
+                    Intent toPlayActivity=new Intent(MainActivity.this,PlayActivity.class);
+                    startActivity(toPlayActivity);
+                    finish();
                 } else {
                     mInformationTextView.setText("Error Token");
                 }
