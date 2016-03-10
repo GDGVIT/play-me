@@ -469,7 +469,7 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
         }
 
         Calendar c=Calendar.getInstance();
-        CountDownTimer startDelay=new CountDownTimer((Integer.parseInt(time))*1000,1000) {
+        CountDownTimer startDelay=new CountDownTimer((Integer.parseInt(time)-System.currentTimeMillis())*1000,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 tv.setText(String.valueOf(millisUntilFinished/1000));
