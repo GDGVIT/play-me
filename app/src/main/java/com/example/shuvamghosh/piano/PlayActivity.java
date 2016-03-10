@@ -41,19 +41,19 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
     private static int SHARP = 21;
     private static int count = 0;
 
-    /*                                               b,b,cs,b,e,ds,b,b,cs,b,fs,e,b,b,bh,gs,e,ds,cs,a,a,gs,e,f,fs,e
-    basic: 0a,1b,2c,3d,4e,5f,6g
-    sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
-     */
-    int myToneArrayBasic[] = {1, 1, -1, 1, 4, -1, 1, 1, -1, 1, -1, 4, 1, 1, -1, -1, 4, -1, -1, 0, 0, -1, 4, 5, -1, 4};
-    int myToneArraySharp[] = {-1, -1, 2, -1, -1, 3, -1, -1, 2, -1, 5, -1, -1, -1, 1, 6, -1, 3, 2, -1, -1, 6, -1, -1, 5, -1};
-    private SensorManager mSensorManager;
-    private Sensor mSensor;
-    private SoundPool soundPool;
-    int arrBasic[];
-    int arrSharp[];
-    int arrBasicSad[];
-    int arrSharpSad[];
+/*                                               b,b,cs,b,e,ds,b,b,cs,b,fs,e,b,b,bh,gs,e,ds,cs,a,a,gs,e,f,fs,e
+basic: 0a,1b,2c,3d,4e,5f,6g
+sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
+ */
+     int myToneArrayBasic[] =  {1,  1,-1,  1,  4,-1,  1,  1, -1, 1,-1,  4,  1,  1,  -1,-1,  4,-1,-1,  0, 0,-1,  4,  5, -1, 4};
+     int myToneArraySharp[] =  {-1,-1, 2, -1, -1, 3, -1, -1, 2, -1, 5, -1, -1, -1,   1, 6, -1, 3,  2, -1, -1, 6, -1, -1, 5, -1};
+     private SensorManager mSensorManager;
+     private Sensor mSensor;
+     private SoundPool soundPool;
+     int arrBasic[];
+     int arrSharp[];
+     int arrBasicSad[];
+     int arrSharpSad[];
 
     boolean loaded = false;
     int k = 0;
@@ -68,7 +68,7 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
     private TextView tv;
     private RadioButton radioButton;
     private int toneMode = BASIC;
-    private String mood, time;
+    private String mood,time;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private boolean isReceiverRegistered;
 
@@ -87,11 +87,14 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
             public void onReceive(Context context, Intent intent) {
 
                 tv.setText("Started Playing");
-
-                String object[] = intent.getStringExtra("message").split(",");
-                mood = object[0];
-                time = object[1];
-                play();
+                try {
+                    JSONObject object=new JSONObject(intent.getStringExtra("message"));
+                    mood=object.getString("mood");
+                    time=object.getString("time");
+                    play();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         };
@@ -104,10 +107,10 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
         button.setOnClickListener(this);
         playButton = (Button) findViewById(R.id.play_button);
         playButton.setOnClickListener(this);
-        imageView = (ImageView) findViewById(R.id.imageView);
+        imageView=(ImageView)findViewById(R.id.imageView);
         flashImage = (Button) findViewById(R.id.dispButton);
-        radioButton = (RadioButton) findViewById(R.id.sadButton);
-        tv = (TextView) findViewById(R.id.textView);
+        radioButton= (RadioButton) findViewById(R.id.sadButton);
+        tv= (TextView) findViewById(R.id.textView);
 
         checkDeviceTone();
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -137,8 +140,10 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
         int[] SOUND_TONES_BASIC_T = new int[7];
         int[] SOUND_TONES_SHARP_T = new int[7];
 
-        int[] SOUND_TONES_BASIC_T_SAD = new int[7];
-        int[] SOUND_TONES_SHARP_T_SAD = new int[7];
+        int[] SOUND_TONES_BASIC_T_SAD= new int[7];
+        int[] SOUND_TONES_SHARP_T_SAD= new int[7];
+
+
 
 
         for (int i = 0; i < typedArrayBasic.length(); i++) {
@@ -170,6 +175,7 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
                 arrBasicSad[i] = -1;
             }
         }*/
+
 
 
         arrBasic = new int[myToneArrayBasic.length];
@@ -226,8 +232,8 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
     }
 
 
-    private void registerReceiver() {
-        if (!isReceiverRegistered) {
+    private void registerReceiver(){
+        if(!isReceiverRegistered) {
             LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                     new IntentFilter(QuickstartPreferences.PLAY_NOTIFICATION));
             isReceiverRegistered = true;
@@ -295,8 +301,9 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
                     soundPool.play(arrBasic[toneInt], volume, volume, 1, 0, 1f);
 
 
-                } else {
-                    count = 0;
+                }
+                else {
+                    count=0;
                     soundPool.play(arrSharp[toneInt], volume, volume, 1, 0, 1f);
 
                 }
@@ -418,7 +425,8 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
     public void play() {
 
 
-        if (mood.equals("sad")) {
+        if(mood.equals("sad"))
+        {
             int[] SOUND_TONES_BASIC_T = new int[7];
             int[] SOUND_TONES_SHARP_T = new int[7];
 
@@ -460,11 +468,11 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
 
         }
 
-        Calendar c = Calendar.getInstance();
-        CountDownTimer startDelay = new CountDownTimer((Integer.parseInt(time) - c.get(Calendar.SECOND)) * 1000, 1000) {
+        Calendar c=Calendar.getInstance();
+        CountDownTimer startDelay=new CountDownTimer((Integer.parseInt(time)-c.get(Calendar.SECOND))*1000,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                tv.setText(String.valueOf(millisUntilFinished / 1000));
+                tv.setText(String.valueOf(millisUntilFinished/1000));
             }
 
             @Override
@@ -475,6 +483,8 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
         startDelay.start();
 
 
+
+
     }
 
     private void finallyPlay() {
@@ -483,11 +493,11 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onTick(long millisUntilFinished) {
                 count++;
-                tv.setText("Count: " + count);
+                tv.setText("Count: "+count);
                 if (start[0] < arrBasic.length) {
                     //ImageView iv=(ImageView)findViewById(R.id.imageView);
                     Log.d(String.valueOf(start[0]), String.valueOf(arrBasic.length));
-                    if (Arrays.binarySearch(myTone.split(","), String.valueOf(myToneArrayBasic[start[0]])) != -1) {
+                    if (Arrays.binarySearch(myTone.split(","),String.valueOf(myToneArrayBasic[start[0]]))!=-1) {
                         // if (myTone.equals(String.valueOf(myToneArrayBasic[start[0]]))) {
                         toneInt = start[0];
                         toneMode = PlayActivity.BASIC;
@@ -504,7 +514,7 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
                         Log.d("flashImageV", String.valueOf(flashImage.getVisibility()));
 
 
-                    } else if (Arrays.binarySearch(myTone.split(","), String.valueOf(myToneArraySharp[start[0]])) != -1) {
+                    } else if (Arrays.binarySearch(myTone.split(","),String.valueOf(myToneArraySharp[start[0]]))!=-1) {
                         // else if (myTone.equals(String.valueOf(myToneArraySharp[start[0]]))) {
                         toneInt = start[0];
                         toneMode = PlayActivity.SHARP;
