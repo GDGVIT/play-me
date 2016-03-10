@@ -17,6 +17,7 @@ import android.media.SoundPool.OnLoadCompleteListener;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -24,6 +25,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -41,23 +43,24 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
     private static int SHARP = 21;
     private static int count = 0;
 
-/*                                               b,b,cs,b,e,ds,b,b,cs,b,fs,e,b,b,bh,gs,e,ds,cs,a,a,gs,e,f,fs,e
-basic: 0a,1b,2c,3d,4e,5f,6g
-sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
- */
-     int myToneArrayBasic[] =  {1,  1,-1,  1,  4,-1,  1,  1, -1, 1,-1,  4,  1,  1,  -1,-1,  4,-1,-1,  0, 0,-1,  4,  5, -1, 4};
-     int myToneArraySharp[] =  {-1,-1, 2, -1, -1, 3, -1, -1, 2, -1, 5, -1, -1, -1,   1, 6, -1, 3,  2, -1, -1, 6, -1, -1, 5, -1};
-     private SensorManager mSensorManager;
-     private Sensor mSensor;
-     private SoundPool soundPool;
-     int arrBasic[];
-     int arrSharp[];
-     int arrBasicSad[];
-     int arrSharpSad[];
+    /*                                               b,b,cs,b,e,ds,b,b,cs,b,fs,e,b,b,bh,gs,e,ds,cs,a,a,gs,e,f,fs,e
+    basic: 0a,1b,2c,3d,4e,5f,6g
+    sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
+     */
+    int myToneArrayBasic[] = {1, 1, -1, 1, 4, -1, 1, 1, -1, 1, -1, 4, 1, 1, -1, -1, 4, -1, -1, 0, 0, -1, 4, 5, -1, 4};
+    int myToneArraySharp[] = {-1, -1, 2, -1, -1, 3, -1, -1, 2, -1, 5, -1, -1, -1, 1, 6, -1, 3, 2, -1, -1, 6, -1, -1, 5, -1};
+    private SensorManager mSensorManager;
+    private Sensor mSensor;
+    private SoundPool soundPool;
+    int arrBasic[];
+    int arrSharp[];
+    int arrBasicSad[];
+    int arrSharpSad[];
 
     boolean loaded = false;
     int k = 0;
 
+    private LinearLayout keyLayout;
     private String myTone;
 
     private EditText toneEditText;
@@ -68,7 +71,7 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
     private TextView tv;
     private RadioButton radioButton;
     private int toneMode = BASIC;
-    private String mood,time;
+    private String mood, time;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private boolean isReceiverRegistered;
 
@@ -88,9 +91,9 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
 
                 tv.setText("Started Playing");
                 try {
-                    JSONObject object=new JSONObject(intent.getStringExtra("message"));
-                    mood=object.getString("mood");
-                    time=object.getString("time");
+                    JSONObject object = new JSONObject(intent.getStringExtra("message"));
+                    mood = object.getString("mood");
+                    time = object.getString("time");
                     play();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -107,10 +110,11 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
         button.setOnClickListener(this);
         playButton = (Button) findViewById(R.id.play_button);
         playButton.setOnClickListener(this);
-        imageView=(ImageView)findViewById(R.id.imageView);
+        imageView = (ImageView) findViewById(R.id.imageView);
         flashImage = (Button) findViewById(R.id.dispButton);
-        radioButton= (RadioButton) findViewById(R.id.sadButton);
-        tv= (TextView) findViewById(R.id.textView);
+        radioButton = (RadioButton) findViewById(R.id.sadButton);
+        tv = (TextView) findViewById(R.id.textView);
+        keyLayout = (LinearLayout) findViewById(R.id.key);
 
         checkDeviceTone();
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -140,10 +144,8 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
         int[] SOUND_TONES_BASIC_T = new int[7];
         int[] SOUND_TONES_SHARP_T = new int[7];
 
-        int[] SOUND_TONES_BASIC_T_SAD= new int[7];
-        int[] SOUND_TONES_SHARP_T_SAD= new int[7];
-
-
+        int[] SOUND_TONES_BASIC_T_SAD = new int[7];
+        int[] SOUND_TONES_SHARP_T_SAD = new int[7];
 
 
         for (int i = 0; i < typedArrayBasic.length(); i++) {
@@ -175,7 +177,6 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
                 arrBasicSad[i] = -1;
             }
         }*/
-
 
 
         arrBasic = new int[myToneArrayBasic.length];
@@ -232,8 +233,8 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
     }
 
 
-    private void registerReceiver(){
-        if(!isReceiverRegistered) {
+    private void registerReceiver() {
+        if (!isReceiverRegistered) {
             LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                     new IntentFilter(QuickstartPreferences.PLAY_NOTIFICATION));
             isReceiverRegistered = true;
@@ -301,9 +302,8 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
                     soundPool.play(arrBasic[toneInt], volume, volume, 1, 0, 1f);
 
 
-                }
-                else {
-                    count=0;
+                } else {
+                    count = 0;
                     soundPool.play(arrSharp[toneInt], volume, volume, 1, 0, 1f);
 
                 }
@@ -425,8 +425,7 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
     public void play() {
 
 
-        if(mood.equals("sadness"))
-        {
+        if (mood.equals("sadness")) {
             int[] SOUND_TONES_BASIC_T = new int[7];
             int[] SOUND_TONES_SHARP_T = new int[7];
 
@@ -468,11 +467,11 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
 
         }
 
-        Calendar c=Calendar.getInstance();
-        CountDownTimer startDelay=new CountDownTimer((Long.parseLong(time)-System.currentTimeMillis()),1000) {
+        Calendar c = Calendar.getInstance();
+        CountDownTimer startDelay = new CountDownTimer((Long.parseLong(time) - System.currentTimeMillis()), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                tv.setText(String.valueOf(millisUntilFinished/1000));
+                tv.setText(String.valueOf(millisUntilFinished / 1000));
             }
 
             @Override
@@ -483,8 +482,6 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
         startDelay.start();
 
 
-
-
     }
 
     private void finallyPlay() {
@@ -493,29 +490,31 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
             @Override
             public void onTick(long millisUntilFinished) {
                 count++;
-                tv.setText("Count: "+count);
+                tv.setText("Count: " + count);
                 if (start[0] < arrBasic.length) {
                     //ImageView iv=(ImageView)findViewById(R.id.imageView);
                     Log.d(String.valueOf(start[0]), String.valueOf(arrBasic.length));
                     //if (Arrays.binarySearch(myTone.split(","),String.valueOf(myToneArrayBasic[start[0]]))!=-1) {
-                         if (myTone.equals(String.valueOf(myToneArrayBasic[start[0]]))) {
-                             toneInt = start[0];
-                             toneMode = PlayActivity.BASIC;
-                             Log.d("flashImage", String.valueOf(myToneArrayBasic[start[0]]));
+                    if (myTone.equals(String.valueOf(myToneArrayBasic[start[0]]))) {
+                        keyLayout.setBackgroundColor(ContextCompat.getColor(PlayActivity.this, R.color.white));
+                        toneInt = start[0];
+                        toneMode = PlayActivity.BASIC;
+                        Log.d("flashImage", String.valueOf(myToneArrayBasic[start[0]]));
 
-                             imageView.setActivated(true);
+                        imageView.setActivated(true);
 
-                             flashImage.setText("Press");
+                        flashImage.setText("Press");
 
 
 
                        /* Toast.makeText(PlayActivity.this, "Press", Toast.LENGTH_SHORT).show();*/
 
-                             Log.d("flashImageV", String.valueOf(flashImage.getVisibility()));
+                        Log.d("flashImageV", String.valueOf(flashImage.getVisibility()));
 
 
-                             //} else if (Arrays.binarySearch(myTone.split(","),String.valueOf(myToneArraySharp[start[0]]))!=-1) {
-                         } else if (myTone.equals(String.valueOf(myToneArraySharp[start[0]]))) {
+                        //} else if (Arrays.binarySearch(myTone.split(","),String.valueOf(myToneArraySharp[start[0]]))!=-1) {
+                    } else if (myTone.equals(String.valueOf(myToneArraySharp[start[0]]))) {
+                        keyLayout.setBackgroundColor(ContextCompat.getColor(PlayActivity.this, R.color.white));
                         toneInt = start[0];
                         toneMode = PlayActivity.SHARP;
                         Log.d("flashImage", String.valueOf(myToneArrayBasic[start[0]]));
@@ -527,6 +526,8 @@ sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
 
 
                     } else {
+
+                        keyLayout.setBackgroundColor(ContextCompat.getColor(PlayActivity.this,R.color.black));
                         Log.d("start0 less", String.valueOf(start[0]));
                         imageView.setActivated(false);
                         tv.setText("Wait");
