@@ -47,8 +47,12 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
     basic: 0a,1b,2c,3d,4e,5f,6g
     sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
      */
-    int myToneArrayBasic[] = {1, 1, -1, 1, 4, -1, 1, 1, -1, 1, -1, 4, 1, 1, -1, -1, 4, -1, -1, 0, 0, -1, 4, 5, -1, 4};
-    int myToneArraySharp[] = {-1, -1, 2, -1, -1, 3, -1, -1, 2, -1, 5, -1, -1, -1, 1, 6, -1, 3, 2, -1, -1, 6, -1, -1, 5, -1};
+    //int myToneArrayBasic[] = {1, 1, -1, 1, 4, -1, 1, 1, -1, 1, -1, 4, 1, 1, -1, -1, 4, -1, -1, 0, 0, -1, 4, 5, -1, 4};
+    //int myToneArraySharp[] = {-1, -1, 2, -1, -1, 3, -1, -1, 2, -1, 5, -1, -1, -1, 1, 6, -1, 3, 2, -1, -1, 6, -1, -1, 5, -1};
+    int myToneArrayBasic[] = {5,5,5,-1,-1,5,-1,-1,5,3,3,3,-1,5,-1,-1,-1,5,5,5,5,-1,-1,5,-1,-1,5};
+    int myToneArraySharp[] = {-1,-1,-1,3,0,-1,3,0,-1,-1,-1,-1,3,-1,4,3,0,-1,-1,-1,-1,3,0,-1,3,0,-1};
+
+
     private SensorManager mSensorManager;
     private Sensor mSensor;
     private SoundPool soundPool;
