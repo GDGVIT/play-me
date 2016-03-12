@@ -43,7 +43,7 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
     private static int SHARP = 21;
     private static int count = 0;
 
-    /*                                               b,b,cs,b,e,ds,b,b,cs,b,fs,e,b,b,bh,gs,e,ds,cs,a,a,gs,e,f,fs,e
+    /*b,b,cs,b,e,ds,b,b,cs,b,fs,e,b,b,bh,gs,e,ds,cs,a,a,gs,e,f,fs,e
     basic: 0a,1b,2c,3d,4e,5f,6g
     sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
      */
@@ -53,7 +53,6 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
 
     int myToneArrayBasic_sw[] = {6, 6, 6, -1, -1, 6, -1, -1, 6, 3, 3, 3, -1, 6, -1, -1, -1, 6, 6, 6, 6, -1, -1, 6, -1, -1, 6};
     int myToneArraySharp_sw[] = {-1, -1, -1, 3, 0, -1, 3, 0, -1, -1, -1, -1, 3, -1, 5, 3, 0, -1, -1, -1, -1, 3, 0, -1, 3, 0, -1};
-
 
     private SensorManager mSensorManager;
     private Sensor mSensor;
@@ -197,6 +196,7 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
 
 
 
+
        /* arrSharpSad = new int[myToneArraySharp.length];
 
         for (int i = 0; i < arrSharp.length; i++) {
@@ -210,13 +210,13 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
         }*/
 
 
-        arrSharp = new int[myToneArraySharp.length];
+        arrSharp = new int[myToneArraySharp_sw.length];
 
         for (int i = 0; i < arrSharp.length; i++) {
 
 
-            if (myToneArraySharp[i] != -1)
-                arrSharp[i] = SOUND_TONES_SHARP_T[myToneArraySharp[i]];
+            if (myToneArraySharp_sw[i] != -1)
+                arrSharp[i] = SOUND_TONES_SHARP_T[myToneArraySharp_sw[i]];
             else {
                 arrSharp[i] = -1;
             }
@@ -308,124 +308,13 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
                     soundPool.play(arrBasic[toneInt], volume, volume, 1, 0, 1f);
 
 
-                } else {
+                } else  {
                     count = 0;
                     soundPool.play(arrSharp[toneInt], volume, volume, 1, 0, 1f);
 
                 }
             }
         }
-
-       /* if (event.values[0] == 0) {
-
-
-            TextView tv=(TextView)findViewById(R.id.textView);
-            tv.setText("Hello");
-
-
-        }*//*
-        if(event.values[0]<=5)
-        {
-            AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
-            float actualVolume = (float) audioManager
-                    .getStreamVolume(AudioManager.STREAM_MUSIC);
-            float maxVolume = (float) audioManager
-                    .getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-            float volume = actualVolume / maxVolume;
-// Is the sound loaded already?
-            if (loaded) {
-                if(k<=2) {
-                    soundPool.play(soundID1, volume, volume, 1, 0, 1f);
-
-                    Log.e("Test", "Played sound");
-                    k++;
-                }
-                else if(k>=3&&k<=6)
-                {
-                    soundPool.play(soundID2, volume, volume, 1, 0, 1f);
-
-                    Log.e("Test", "Played sound");
-                    k++;
-                }
-                else if(k>=7&&k<=9)
-                {
-                    soundPool.play(soundID3, volume, volume, 1, 0, 1f);
-
-                    Log.e("Test", "Played sound");
-                    k++;
-                }
-                else if(k>=10&&k<=13)
-                {
-                    soundPool.play(soundID4, volume, volume, 1, 0, 1f);
-
-                    Log.e("Test", "Played sound");
-                    k++;
-                }
-                else if(k==14||(k==28))
-                {
-                    soundPool.play(soundID5, volume, volume, 1, 0, 1f);
-                    Log.e("Test", "Played sound");
-                    k++;
-                }
-                else if((k>=15&&k<=16)||(k>=29&&k<=30))
-                {
-                    soundPool.play(soundID6, volume, volume, 1, 0, 1f);
-                    Log.e("Test", "Played sound");
-                    k++;
-
-                }
-                else if((k>=17&&k<=20)||(k>=31&&k<=34))
-                {
-                    soundPool.play(soundID7, volume, volume, 1, 0, 1f);
-                    Log.e("Test", "Played sound");
-                    k++;
-
-                }
-                else if((k>=21&&k<=22)||(k>=35&&k<=36))
-                {
-                    soundPool.play(soundID8, volume, volume, 1, 0, 1f);
-                    Log.e("Test", "Played sound");
-                    k++;
-
-                }
-                else if(k==23||k==37)
-                {
-                    soundPool.play(soundID9, volume, volume, 1, 0, 1f);
-                    Log.e("Test", "Played sound");
-                    k++;
-
-                }
-                else if(k==24||k==38)
-                {
-                    soundPool.play(soundID10, volume, volume, 1, 0, 1f);
-                    Log.e("Test", "Played sound");
-                    k++;
-
-                }
-                else if(k==25)
-                {
-                    soundPool.play(soundID11, volume, volume, 1, 0, 1f);
-                    Log.e("Test", "Played sound");
-                    k++;
-
-                }
-                else if(k==26)
-                {
-                    soundPool.play(soundID12, volume, volume, 1, 0, 1f);
-                    Log.e("Test", "Played sound");
-                    k++;
-
-                }
-                else if(k==27)
-                {
-                    soundPool.play(soundID13, volume, volume, 1, 0, 1f);
-                    Log.e("Test", "Played sound");
-                    k++;
-
-                }
-            }
-        }
-        */
     }
 
     public void play() {
@@ -495,6 +384,7 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private void finallyPlay() {
+        Log.d("myTone",myTone);
         final int[] start = {0};
         CountDownTimer countDownTimer = new CountDownTimer(21700, 800) {
             @Override
@@ -504,8 +394,10 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
                 if (start[0] < arrBasic.length) {
                     //ImageView iv=(ImageView)findViewById(R.id.imageView);
                     Log.d(String.valueOf(start[0]), String.valueOf(arrBasic.length));
-                    //if (Arrays.binarySearch(myTone.split(","),String.valueOf(myToneArrayBasic[start[0]]))!=-1) {
-                    if (myTone.equals(String.valueOf(myToneArrayBasic_sw[start[0]]))) {
+                    if (Arrays.binarySearch(myTone.split(","), String.valueOf(myToneArrayBasic_sw[start[0]])) != -1) {
+
+                        Log.d("basic tick", String.valueOf(myToneArrayBasic_sw[start[0]]));
+                        //if (myTone.equals(String.valueOf(myToneArrayBasic_sw[start[0]]))) {
                         keyLayout.setBackgroundColor(ContextCompat.getColor(PlayActivity.this, R.color.white));
                         toneInt = start[0];
                         toneMode = PlayActivity.BASIC;
@@ -515,15 +407,15 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
 
                         flashImage.setText("Press");
 
-
-
                        /* Toast.makeText(PlayActivity.this, "Press", Toast.LENGTH_SHORT).show();*/
 
                         Log.d("flashImageV", String.valueOf(flashImage.getVisibility()));
 
 
-                        //} else if (Arrays.binarySearch(myTone.split(","),String.valueOf(myToneArraySharp[start[0]]))!=-1) {
-                    } else if (myTone.equals(String.valueOf(myToneArraySharp_sw[start[0]]))) {
+                    } else if (Arrays.binarySearch(myTone.split(","), String.valueOf(myToneArraySharp_sw[start[0]])) != -1) {
+                        //} else if (myTone.equals(String.valueOf(myToneArraySharp_sw[start[0]]))) {
+
+                        Log.d("sharp tick", String.valueOf(myToneArraySharp_sw[start[0]]));
                         keyLayout.setBackgroundColor(ContextCompat.getColor(PlayActivity.this, R.color.white));
                         toneInt = start[0];
                         toneMode = PlayActivity.SHARP;
@@ -546,6 +438,7 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
                     start[0]++;
                 } else {
 
+                    keyLayout.setBackgroundColor(ContextCompat.getColor(PlayActivity.this, R.color.black));
                     Log.d("start0 more", String.valueOf(start[0]));
                     imageView.setActivated(false);
                     tv.setText("Wait");
