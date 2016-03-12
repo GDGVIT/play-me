@@ -141,8 +141,8 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
         });
 
 
-        TypedArray typedArrayBasic = getResources().obtainTypedArray(R.array.sound_tones_basic);
-        TypedArray typedArraySharp = getResources().obtainTypedArray(R.array.sound_tones_sharp);
+        TypedArray typedArrayBasic = getResources().obtainTypedArray(R.array.sound_tones_basic_sw);
+        TypedArray typedArraySharp = getResources().obtainTypedArray(R.array.sound_tones_sharp_sw);
 
        /* TypedArray typedArrayBasicSad = getResources().obtainTypedArray(R.array.sound_tones_basic_sad);
         TypedArray typedArraySharpSad = getResources().obtainTypedArray(R.array.sound_tones_sharp_sad);*/
@@ -185,11 +185,11 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
         }*/
 
 
-        arrBasic = new int[myToneArrayBasic.length];
+        arrBasic = new int[myToneArrayBasic_sw.length];
 
         for (int i = 0; i < arrBasic.length; i++) {
-            if (myToneArrayBasic[i] != -1)
-                arrBasic[i] = SOUND_TONES_BASIC_T[myToneArrayBasic[i]];
+            if (myToneArrayBasic_sw[i] != -1)
+                arrBasic[i] = SOUND_TONES_BASIC_T[myToneArrayBasic_sw[i]];
             else {
                 arrBasic[i] = -1;
             }
@@ -452,23 +452,23 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
                 SOUND_TONES_SHARP_T[i] = soundPool.load(this, typedArraySharp.getResourceId(i, -1), 1);
             }
 
-            arrBasic = new int[myToneArrayBasic.length];
+            arrBasic = new int[myToneArrayBasic_sw.length];
 
             for (int i = 0; i < arrBasic.length; i++) {
-                if (myToneArrayBasic[i] != -1)
-                    arrBasic[i] = SOUND_TONES_BASIC_T[myToneArrayBasic[i]];
+                if (myToneArrayBasic_sw[i] != -1)
+                    arrBasic[i] = SOUND_TONES_BASIC_T[myToneArrayBasic_sw[i]];
                 else {
                     arrBasic[i] = -1;
                 }
             }
 
-            arrSharp = new int[myToneArraySharp.length];
+            arrSharp = new int[myToneArraySharp_sw.length];
 
             for (int i = 0; i < arrSharp.length; i++) {
 
 
-                if (myToneArraySharp[i] != -1)
-                    arrSharp[i] = SOUND_TONES_SHARP_T[myToneArraySharp[i]];
+                if (myToneArraySharp_sw[i] != -1)
+                    arrSharp[i] = SOUND_TONES_SHARP_T[myToneArraySharp_sw[i]];
                 else {
                     arrSharp[i] = -1;
                 }
@@ -505,11 +505,11 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
                     //ImageView iv=(ImageView)findViewById(R.id.imageView);
                     Log.d(String.valueOf(start[0]), String.valueOf(arrBasic.length));
                     //if (Arrays.binarySearch(myTone.split(","),String.valueOf(myToneArrayBasic[start[0]]))!=-1) {
-                    if (myTone.equals(String.valueOf(myToneArrayBasic[start[0]]))) {
+                    if (myTone.equals(String.valueOf(myToneArrayBasic_sw[start[0]]))) {
                         keyLayout.setBackgroundColor(ContextCompat.getColor(PlayActivity.this, R.color.white));
                         toneInt = start[0];
                         toneMode = PlayActivity.BASIC;
-                        Log.d("flashImage", String.valueOf(myToneArrayBasic[start[0]]));
+                        Log.d("flashImage", String.valueOf(myToneArrayBasic_sw[start[0]]));
 
                         imageView.setActivated(true);
 
@@ -523,11 +523,11 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
 
 
                         //} else if (Arrays.binarySearch(myTone.split(","),String.valueOf(myToneArraySharp[start[0]]))!=-1) {
-                    } else if (myTone.equals(String.valueOf(myToneArraySharp[start[0]]))) {
+                    } else if (myTone.equals(String.valueOf(myToneArraySharp_sw[start[0]]))) {
                         keyLayout.setBackgroundColor(ContextCompat.getColor(PlayActivity.this, R.color.white));
                         toneInt = start[0];
                         toneMode = PlayActivity.SHARP;
-                        Log.d("flashImage", String.valueOf(myToneArrayBasic[start[0]]));
+                        Log.d("flashImage", String.valueOf(myToneArrayBasic_sw[start[0]]));
                         imageView.setActivated(true);
                         flashImage.setText("Press");
                        /* Toast.makeText(PlayActivity.this, "Press", Toast.LENGTH_SHORT).show();*/
