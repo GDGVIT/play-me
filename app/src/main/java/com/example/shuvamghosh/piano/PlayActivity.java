@@ -47,10 +47,12 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
     basic: 0a,1b,2c,3d,4e,5f,6g
     sharp: 0as,1bhs,2cs,3ds,4e,5fs,6gs
      */
-    //int myToneArrayBasic[] = {1, 1, -1, 1, 4, -1, 1, 1, -1, 1, -1, 4, 1, 1, -1, -1, 4, -1, -1, 0, 0, -1, 4, 5, -1, 4};
-    //int myToneArraySharp[] = {-1, -1, 2, -1, -1, 3, -1, -1, 2, -1, 5, -1, -1, -1, 1, 6, -1, 3, 2, -1, -1, 6, -1, -1, 5, -1};
-    int myToneArrayBasic[] = {5,5,5,-1,-1,5,-1,-1,5,3,3,3,-1,5,-1,-1,-1,5,5,5,5,-1,-1,5,-1,-1,5};
-    int myToneArraySharp[] = {-1,-1,-1,3,0,-1,3,0,-1,-1,-1,-1,3,-1,4,3,0,-1,-1,-1,-1,3,0,-1,3,0,-1};
+    int myToneArrayBasic[] = {1, 1, -1, 1, 4, -1, 1, 1, -1, 1, -1, 4, 1, 1, -1, -1, 4, -1, -1, 0, 0, -1, 4, 5, -1, 4};
+    int myToneArraySharp[] = {-1, -1, 2, -1, -1, 3, -1, -1, 2, -1, 5, -1, -1, -1, 1, 6, -1, 3, 2, -1, -1, 6, -1, -1, 5, -1};
+
+
+    int myToneArrayBasic_sw[] = {6, 6, 6, -1, -1, 6, -1, -1, 6, 3, 3, 3, -1, 6, -1, -1, -1, 6, 6, 6, 6, -1, -1, 6, -1, -1, 6};
+    int myToneArraySharp_sw[] = {-1, -1, -1, 3, 0, -1, 3, 0, -1, -1, -1, -1, 3, -1, 5, 3, 0, -1, -1, -1, -1, 3, 0, -1, 3, 0, -1};
 
 
     private SensorManager mSensorManager;
@@ -436,8 +438,11 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
            /* int myToneArrayBasic[] =  {1,  1,-1,  1,  4,-1,  1,  1, -1, 1,-1,  4,  1,  1,  -1,-1,  4,-1,-1,  0,  0,-1,  4,  5, -1, 4};
             int myToneArraySharp[] = {-1,-1, 2, -1, -1, 3, -1, -1, 2, -1, 5, -1, -1, -1,   1, 6, -1, 3, 2, -1, -1, 6, -1, -1, 5, -1};*/
 
-            TypedArray typedArrayBasic = getResources().obtainTypedArray(R.array.sound_tones_basic_sad);
-            TypedArray typedArraySharp = getResources().obtainTypedArray(R.array.sound_tones_sharp_sad);
+            //TypedArray typedArrayBasic = getResources().obtainTypedArray(R.array.sound_tones_basic_sad);
+            //TypedArray typedArraySharp = getResources().obtainTypedArray(R.array.sound_tones_sharp_sad);
+
+            TypedArray typedArrayBasic = getResources().obtainTypedArray(R.array.sound_tones_basic_sw);
+            TypedArray typedArraySharp = getResources().obtainTypedArray(R.array.sound_tones_sharp_sw);
 
             for (int i = 0; i < typedArrayBasic.length(); i++) {
                 SOUND_TONES_BASIC_T[i] = soundPool.load(this, typedArrayBasic.getResourceId(i, -1), 1);
@@ -469,6 +474,7 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
                 }
             }
 
+
         }
 
         Calendar c = Calendar.getInstance();
@@ -490,7 +496,7 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
 
     private void finallyPlay() {
         final int[] start = {0};
-        CountDownTimer countDownTimer = new CountDownTimer(21600, 800) {
+        CountDownTimer countDownTimer = new CountDownTimer(21700, 800) {
             @Override
             public void onTick(long millisUntilFinished) {
                 count++;
@@ -531,7 +537,7 @@ public class PlayActivity extends AppCompatActivity implements SensorEventListen
 
                     } else {
 
-                        keyLayout.setBackgroundColor(ContextCompat.getColor(PlayActivity.this,R.color.black));
+                        keyLayout.setBackgroundColor(ContextCompat.getColor(PlayActivity.this, R.color.black));
                         Log.d("start0 less", String.valueOf(start[0]));
                         imageView.setActivated(false);
                         tv.setText("Wait");

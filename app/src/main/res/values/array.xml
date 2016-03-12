@@ -49,4 +49,28 @@
         <item>@raw/fs_sad</item>
         <item>@raw/gs_sad</item>
     </array>
+
+    <array name="sound_tones_basic_sw">
+
+
+        <item>@raw/a_sad</item>>
+        <item>@raw/b_sad</item>
+        <item>@raw/c</item>
+        <item>@raw/d5edit_sw</item>
+        <item>@raw/e_sad</item>
+        <item>@raw/fs</item>
+        <item>@raw/gedit_sw</item>
+    </array>
+
+    <array name="sound_tones_sharp_sw">
+
+
+        <item>@raw/asedit_sw</item>
+        <item>@raw/bhigh_sad</item>
+        <item>@raw/cs_sad</item>
+        <item>@raw/dsedit_sw</item>
+        <item>@raw/e_sad</item>
+        <item>@raw/fs4edit_sw</item>
+        <item>@raw/gs_sad</item>
+    </array>
 </resources>
